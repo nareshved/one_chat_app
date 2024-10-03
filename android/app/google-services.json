@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "750270234587",
+    "project_id": "nk-one-chat-app",
+    "storage_bucket": "nk-one-chat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750270234587:android:5c8c32750d860e8572f1fe",
+        "android_client_info": {
+          "package_name": "com.example.one_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpCwJFNbsQUgc-WjgURb7SNsXP9IbFvlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -13,7 +13,7 @@ class AppRoutes {
 
   static const String signUpScreen = '/sign_up_screen';
 
-  static const String homeScreen = '/home_screen';
+  // static const String homeScreen = '/home_screen';
 
   static const String contactScreen = '/contact_screen';
 
@@ -22,12 +22,12 @@ class AppRoutes {
   static const String homeNavBarScreen = '/homeNavBar_screen';
 
   static Map<String, WidgetBuilder> get routes => {
-        // splashScreen: (context) => const SplashPage(),
-        // loginScreen: (context) => const LoginPage(),
-        // signUpScreen: (context) => SignUpPage.builder(),
+        splashScreen: (context) => const SplashPage(),
+        loginScreen: (context) => const LoginPage(),
+        signUpScreen: (context) => SignUpPage.builder(),
         // homeScreen: (context) => const HomeScreen(),
         contactScreen: (context) => const ContactPage(),
-        chatScreen: (context) => const ChatsPage(),
+        chatScreen: (context) => const HomeChatsPage(),
         homeNavBarScreen: (context) => const BottomNavBarHome(),
       };
 }

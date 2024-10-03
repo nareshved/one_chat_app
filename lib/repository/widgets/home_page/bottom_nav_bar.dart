@@ -13,7 +13,7 @@ class BottomNavBarHome extends StatefulWidget {
 
 class _BottomNavBarHomeState extends State<BottomNavBarHome> {
   List<Widget> navPages = const [
-    ChatsPage(),
+    HomeChatsPage(),
     CallsPage(),
     SettingsPage(),
   ];
