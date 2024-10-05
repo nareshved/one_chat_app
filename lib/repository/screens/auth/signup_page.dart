@@ -22,8 +22,8 @@ class SignUpPage extends StatefulWidget {
       create: (context) => FirebaseProvider(),
       child: BlocProvider(
         create: (context) => ChatBloc(
-            firebaseProvider: RepositoryProvider.of<FirebaseProvider>(context),
-            context: context),
+          firebaseProvider: RepositoryProvider.of<FirebaseProvider>(context),
+        ),
         child: const SignUpPage(),
       ),
     );

@@ -77,12 +77,9 @@ class LoginPageState extends State<LoginPage> {
               ),
               BlocConsumer<ChatBloc, ChatState>(
                 listener: (context, state) {
-                  if (state is ChatLoadedState) {
-                    Navigator.pushReplacementNamed(
-                        context, AppRoutes.homeNavBarScreen);
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("SuccessFully Logged In")));
+                  if (state is ChatErrorState) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(state.errorMsg)));
                   }
                 },
                 builder: (context, state) {
@@ -94,9 +91,9 @@ class LoginPageState extends State<LoginPage> {
                           children: [
                             CircularProgressIndicator(),
                             SizedBox(
-                              width: 100,
+                              width: 11,
                             ),
-                            Text("Loading"),
+                            Text("Loading....."),
                           ],
                         ));
                   }
@@ -110,6 +107,7 @@ class LoginPageState extends State<LoginPage> {
                           if (email.isNotEmpty && password.isNotEmpty) {
                             BlocProvider.of<ChatBloc>(context).add(
                                 LoginUserEvent(
+                                    ctx: context,
                                     loginEmail: email,
                                     loginPassword: password));
                           }
@@ -118,47 +116,6 @@ class LoginPageState extends State<LoginPage> {
                       child: const Text("login"));
                 },
               ),
-
-              // Login blocCounsumer widget button
-
-              // BlocConsumer<RegisterBloc, RegisterState>(
-              //   listener: (context, state){
-              //     if(state is RegisterLoadedState){
-              //       Navigator.pop(context);
-              //     } else if(state is RegisterErrorState){
-              //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMsg)));
-              //     }
-              //   },
-              //   builder: (context, state) {
-              //     if(state is RegisterLoadingState){
-              //       return ElevatedButton(onPressed: (){}, child: const Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           CircularProgressIndicator(),
-              //           SizedBox(width: 11,),
-              //           Text('Loading')
-              //         ],
-              //       ));
-              //     }
-              //      return ElevatedButton(
-              //         onPressed: () async {
-              //           /// firebase sign Up
-
-              //           if (mFormKey.currentState!.validate()) {
-
-              //             if (emailController.text.isNotEmpty &&
-              //                 passController.text.isNotEmpty) {
-
-              //               BlocProvider.of<RegisterBloc>(context).add(LoginUserEvent(
-              //         loginEmail: emailController.text.toString(), loginPassword: passController.text.toString()));
-              //             }
-
-              //             /// if
-              //           }
-              //         },
-              //         child: const Text("Login Now!"));
-              //   },
-              // ),
               const SizedBox(
                 height: 25,
               ),

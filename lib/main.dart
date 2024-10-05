@@ -7,16 +7,14 @@ import 'package:one_chat_app/firebase_options.dart';
 
 import 'repository/widgets/page_routes/routes.dart';
 
-void main()async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
-  runApp(MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => ChatBloc(firebaseProvider: FirebaseProvider(), context: context),),
-      ],
-      child: const MyApp()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+      create: (context) => ChatBloc(firebaseProvider: FirebaseProvider()),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

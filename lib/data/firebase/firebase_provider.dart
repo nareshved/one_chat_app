@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
+import 'package:one_chat_app/repository/widgets/home_page/bottom_nav_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,7 +41,14 @@ class FirebaseProvider {
       }
     } on FirebaseException catch (e) {
       log("Error: $e");
-      throw Exception("Error: $e");
+
+      if (e.code == 'weak-password') {
+        throw Exception("The password provided is too weak.");
+      } else if (e.code == 'email-already-in-use') {
+        throw Exception("The account already exists for that email");
+      }
+
+      // throw Exception("Error: $e");
     }
   }
 
@@ -55,25 +63,22 @@ class FirebaseProvider {
       if (credential.user != null) {
         var prefs = await SharedPreferences.getInstance();
         prefs.setString(LoginPageState.loginPrefsKey, credential.user!.uid);
-        // Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => const HomeChatsPage(),
-        //     ));
-        //
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text("SuccessFully Logged In")));
-
-        /// const remove
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("user not logged in\n please try again!!")));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomNavBarHome(),
+            ));
       }
-    } on FirebaseException catch (myErrors) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(myErrors.code)));
+    } on FirebaseException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw Exception("No user found for that email.");
+      } else if (e.code == 'wrong-password') {
+        throw Exception("Wrong password provided for that user.");
+      }
+
+      throw Exception("Wrong Details please wait Sometime");
     } catch (e) {
-      log("user login failed error $e.toString()");
+      log("user login failed error ${e.toString()}");
     }
   }
 
@@ -82,81 +87,6 @@ class FirebaseProvider {
       contactsFromFirebase() async {
     return fireBaseFireStore.collection(collectionUser).get();
   }
-
-// my functions
-
-//   Future<void> createUser(String email, String mPassord) async {
-
-//   try {
-
-//     final UserCredential credential = await firebaseAuth.createUserWithEmailAndPassword
-//     (email: email, password: mPassord);
-//     log("found user is null in firebase ");
-
-//    if(credential.user != null ) {
-
-//      fireBaseFireStore.collection(userCollection)
-//     .doc(credential.user!.uid).set(user!.toDoc());
-
-//     /// second collection optional
-
-//     fireBaseFireStore.collection(collectionPasswords).
-//     doc(credential.user!.uid).set({
-//       "name" : user!.name,
-//       "password" : user!.password
-//     });
-//      log("found user  firebase provider");
-
-//   }
-
-//   else {
-//     log("found user is null in firebase provider");
-//   }
-
-//   }
-
-//   on FirebaseAuthException catch (e) {
-//   if (e.code == 'weak-password') {
-//     log('The password provided is too weak.');
-
-//     PrefsUser().showmBar('The password provided is too weak.');
-
-//   }
-
-//   else if (e.code == 'email-already-in-use') {
-//     log('The account already exists for that email.');
-
-//     PrefsUser().showmBar('The account already exists for that email.');
-
-//   }
-
-// } catch (e) {
-//   log("user not created error $e.toString()");
-
-// }
-//   }
-
-  // Future<void> loginUser ({required String email, required String mPassord})async {
-
-  //   try{
-
-  //     final  UserCredential credential =
-  //     await firebaseAuth.signInWithEmailAndPassword(email: email, password: mPassord);
-
-  //   if(credential.user != null){
-
-  //     PrefsUser.prefsUserUidString(value: credential.user!.uid);
-  //         // refs UID Saved
-  //     log( PrefsUser.prefsUserUidString(value: credential.user!.uid).toString());    // refs UID Saved
-
-  //     PrefsUser.prefsSetBool(value: true);
-
-  //   }
-  //   } catch(e){
-
-  //     log("user login failed error $e.toString()");
-  //   }
-  // }
 
   // static userLogOut() async {
   //   await fireBaseAuth.signOut();

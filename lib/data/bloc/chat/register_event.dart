@@ -15,8 +15,9 @@ class LoginUserEvent extends ChatEvents {
 
   String loginEmail;
   String loginPassword;
+  BuildContext ctx;
 
-  LoginUserEvent({required this.loginEmail, required this.loginPassword});
+  LoginUserEvent({required this.loginEmail, required this.loginPassword, required this.ctx});
 }
 
 
