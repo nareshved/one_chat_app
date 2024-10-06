@@ -1,15 +1,8 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:one_chat_app/data/bloc/chat/register_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../widgets/home_page/bottom_nav_bar.dart';
 import '../../widgets/page_routes/routes.dart';
 import '../../widgets/text_feild/text_field.dart';
-import '../home/chats/chats_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

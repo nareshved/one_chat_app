@@ -8,28 +8,29 @@ import 'package:one_chat_app/repository/widgets/home_page/bottom_nav_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../domain/constants/shared_prefs/shared_prefs.dart';
 import '../../domain/models/user_model.dart';
 
 class FirebaseProvider {
-  static final fireBaseAuth = FirebaseAuth.instance;
-  static final fireBaseFireStore = FirebaseFirestore.instance;
+  static final firebaseAuth = FirebaseAuth.instance;
+  static final firebaseFireStore = FirebaseFirestore.instance;
 //  static final firebaseAuth = FirebaseAuth.instance;
 
   static const String collectionUser = "users";
   static const String collectionChat = "chats";
   static const String collectionMSG = "messages";
 
-  //static final userId = FirebaseAuth.instance.currentUser!.uid;
+  static final userId = FirebaseAuth.instance.currentUser!.uid;
 
   Future<void> createUser(
       {required UserModel mUser, required String mPass}) async {
     try {
-      UserCredential credential = await fireBaseAuth
+      UserCredential credential = await firebaseAuth
           .createUserWithEmailAndPassword(email: mUser.email!, password: mPass);
 
       /// create user in firestore
       if (credential.user != null) {
-        fireBaseFireStore
+        firebaseFireStore
             .collection(collectionUser)
             .doc(credential.user!.uid)
             .set(mUser.toDoc())
@@ -57,7 +58,7 @@ class FirebaseProvider {
       required String mPass,
       required BuildContext context}) async {
     try {
-      final UserCredential credential = await fireBaseAuth
+      final UserCredential credential = await firebaseAuth
           .signInWithEmailAndPassword(email: mEmail, password: mPass);
 
       if (credential.user != null) {
@@ -76,7 +77,7 @@ class FirebaseProvider {
         throw Exception("Wrong password provided for that user.");
       }
 
-      throw Exception("Wrong Details please wait Sometime");
+      throw Exception("Wrong Email or password please check");
     } catch (e) {
       log("user login failed error ${e.toString()}");
     }
@@ -85,20 +86,20 @@ class FirebaseProvider {
   /// fetch all contacts from firebase
   static Future<QuerySnapshot<Map<String, dynamic>>>
       contactsFromFirebase() async {
-    return fireBaseFireStore.collection(collectionUser).get();
+    return firebaseFireStore.collection(collectionUser).get();
   }
 
-  // static userLogOut() async {
-  //   await fireBaseAuth.signOut();
+  static userLogOut() async {
+    await firebaseAuth.signOut();
 
-  //   PrefsUser().showmBar("You are signOut");
+    PrefsUser().mShowSnackBar("You are signOut");
 
-  //   log("user signOut from firebase");
+    log("user signOut from firebase");
 
-  //   PrefsUser.prefsSetlogOut(value: "");
+    PrefsUser.prefsSetlogOut(value: "");
 
-  //   log("user signOut from prefs");
-  // }
+    log("user signOut from prefs");
+  }
 
   // static Future<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
   //   return fireBaseFireStore.collection(COLLECTION_USER).get();

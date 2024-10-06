@@ -26,7 +26,7 @@ class AppRoutes {
         loginScreen: (context) => const LoginPage(),
         signUpScreen: (context) => SignUpPage.builder(),
         // homeScreen: (context) => const HomeScreen(),
-        contactScreen: (context) => const ContactPage(),
+        contactScreen: (context) =>  ContactPage(),
         chatScreen: (context) => const HomeChatsPage(),
         homeNavBarScreen: (context) => const BottomNavBarHome(),
       };

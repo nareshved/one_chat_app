@@ -1,12 +1,9 @@
-// import 'package:chat_app_new/domain/models/contact_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// abstract class UserEvents {}
+abstract class UserEvents {}
 
-// class ContactsUserEvent extends UserEvents {
-//   List<ContactModel>? allContacts;
-//   //   var collection;
+class ContactsUserEvent extends UserEvents {
+  List<QuerySnapshot<Map<String, dynamic>>> getUsers;
 
-//   ContactsUserEvent({
-//     this.allContacts,
-//   });
-// }
+  ContactsUserEvent({required this.getUsers});
+}

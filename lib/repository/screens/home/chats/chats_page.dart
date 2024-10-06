@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../pages/contact_page.dart';
+
 class HomeChatsPage extends StatelessWidget {
   const HomeChatsPage({super.key});
 
@@ -10,7 +12,13 @@ class HomeChatsPage extends StatelessWidget {
         title: const Text("Chats"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactPage(),
+              ));
+        },
         child: const Icon(Icons.add_comment_sharp),
       ),
     );
