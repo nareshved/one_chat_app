@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../pages/contact_page.dart';
+import 'package:one_chat_app/repository/screens/pages/contact_page.dart';
 
 class HomeChatsPage extends StatelessWidget {
   const HomeChatsPage({super.key});

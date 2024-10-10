@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
 import 'package:one_chat_app/domain/models/user_model.dart';
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
+import 'package:one_chat_app/repository/screens/pages/chat_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactPage extends StatelessWidget {
@@ -24,7 +25,7 @@ class ContactPage extends StatelessWidget {
       ),
       body: SafeArea(
           child: FutureBuilder(
-        future: FirebaseProvider.contactsFromFirebase(),
+        future: FirebaseProvider.getAllContactsFirebase(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -58,7 +59,15 @@ class ContactPage extends StatelessWidget {
               ? ListView.builder(
                   itemCount: arrUsers.length,
                   itemBuilder: (context, index) {
+                    var eachContactId = snapshot.data!.docs[index].id;
                     return ListTile(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                              toId: eachContactId,
+                            ),
+                          )),
                       title: Text(arrUsers[index].name!),
                       subtitle: Text(arrUsers[index].email!),
                     );

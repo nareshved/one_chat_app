@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../firebase/firebase_provider.dart';
@@ -12,14 +14,75 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
   }) : super(UserInitialState()) {
     // on<ContactsUserEvent>((event, emit) async {
     //   emit(UserLoadingState());
-
+    //
     //   try {
-    //  var contacts = await firebaseProvider.contactsFromFirebase();
-
-    //  emit(UserLoadedState(contactUserCollection: UserModel.fromDoc(contacts.docs)));
+    //     List<> contacts = await FirebaseProvider.getAllContactsFirebase();
+    //
+    //     emit(UserLoadedState(
+    //         contactUserCollection: event.);
     //   } catch (e) {
     //     emit(UserErrorState(errorMsg: e.toString()));
     //   }
     // });
+
+    on<GetChatIdEvent>(
+      (event, emit) {
+        emit(UserLoadingState());
+        try {
+          FirebaseProvider.getChatId(event.fromId, event.toId);
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+
+          log("error found in user bloc getChatId${e.toString()}");
+        }
+      },
+    );
+
+    on<SendMessageEvent>(
+      (event, emit) async {
+        emit(UserLoadingState());
+        try {
+          await FirebaseProvider.sendMessage(
+            msg: event.msg,
+            toId: event.toId,
+          );
+
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+          log("error in user bloc SendMessageEvent${e.toString()}");
+        }
+      },
+    );
+
+    on<SendImageMsgEvent>(
+      (event, emit) async {
+        emit(UserLoadingState());
+        try {
+          await FirebaseProvider.sendImageMsg(
+              imgUrl: event.imgUrl, toId: event.toId, userId: event.userId);
+
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+          log("error in user bloc SendImageMsgEvent${e.toString()}");
+        }
+      },
+    );
+
+    on<GetAllMsgEvent>(
+      (event, emit) {
+        emit(UserLoadingState());
+        try {
+          FirebaseProvider.getAllMsg(toId: event.toId);
+
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+          log("errror in user bloc getAllMsg ${e.toString()}");
+        }
+      },
+    );
   }
 }

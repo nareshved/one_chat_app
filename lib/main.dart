@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:one_chat_app/data/bloc/chat/register_bloc.dart';
+import 'package:one_chat_app/data/bloc/users/user_bloc.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
 import 'package:one_chat_app/firebase_options.dart';
 
@@ -14,6 +15,9 @@ void main() async {
     BlocProvider(
       create: (context) => ChatBloc(firebaseProvider: FirebaseProvider()),
     ),
+    BlocProvider(
+      create: (context) => UserBloc(firebaseProvider: FirebaseProvider()),
+    )
   ], child: const MyApp()));
 }
 

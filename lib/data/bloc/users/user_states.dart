@@ -1,5 +1,3 @@
-
-
 abstract class UserStates {}
 
 class UserInitialState extends UserStates {}
@@ -7,7 +5,7 @@ class UserInitialState extends UserStates {}
 class UserLoadingState extends UserStates {}
 
 class UserLoadedState extends UserStates {
-  // QuerySnapshot<Map<String, dynamic>> contactUserCollection;
+  // Map<String, dynamic> contactUserCollection;
   // // var collection;
   // UserLoadedState({required this.contactUserCollection});
 }

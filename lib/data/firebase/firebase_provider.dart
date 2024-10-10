@@ -7,14 +7,12 @@ import 'package:one_chat_app/repository/screens/auth/login_page.dart';
 import 'package:one_chat_app/repository/widgets/home_page/bottom_nav_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../domain/constants/shared_prefs/shared_prefs.dart';
+import '../../domain/models/message_model.dart';
 import '../../domain/models/user_model.dart';
 
 class FirebaseProvider {
   static final firebaseAuth = FirebaseAuth.instance;
   static final firebaseFireStore = FirebaseFirestore.instance;
-//  static final firebaseAuth = FirebaseAuth.instance;
 
   static const String collectionUser = "users";
   static const String collectionChat = "chats";
@@ -85,97 +83,120 @@ class FirebaseProvider {
 
   /// fetch all contacts from firebase
   static Future<QuerySnapshot<Map<String, dynamic>>>
-      contactsFromFirebase() async {
+      getAllContactsFirebase() async {
     return firebaseFireStore.collection(collectionUser).get();
   }
 
-  static userLogOut() async {
-    await firebaseAuth.signOut();
+  // static userLogOut() async {
+  //   await firebaseAuth.signOut();
 
-    PrefsUser().mShowSnackBar("You are signOut");
+  //   PrefsUser().mShowSnackBar("You are signOut");
 
-    log("user signOut from firebase");
+  //   log("user signOut from firebase");
 
-    PrefsUser.prefsSetlogOut(value: "");
+  //   PrefsUser.prefsSetlogOut(value: "");
 
-    log("user signOut from prefs");
-  }
+  //   log("user signOut from prefs");
 
+  // }
   // static Future<QuerySnapshot<Map<String, dynamic>>> getAllUsers() {
   //   return fireBaseFireStore.collection(COLLECTION_USER).get();
   // }
 
-  // static String getChatId(String fromId, String toId) {
-  //   log("$fromId, $toId");
-  //   if (fromId.hashCode <= toId.hashCode) {
-  //     return "${fromId}_$toId";
-  //   } else {
-  //     return "${toId}_$fromId";
-  //   }
-  // }
+  static String getChatId(String fromId, String toId) {
+    log("$fromId, $toId");
+    if (fromId.hashCode >= toId.hashCode) {
+      return "${fromId}_$toId";
+    } else {
+      return "${toId}_$fromId";
+    }
+  }
 
-  // static void sendMessage(
-  //     {required String msg,
-  //     required String toId,
-  //     required String userId}) async {
-  //   var currTime = DateTime.now().millisecondsSinceEpoch;
-  //   var chatId = getChatId(userId, toId);
-  //   log("$userId, $toId");
-  //   log(chatId);
+  static Future<void> sendMessage({
+    required String msg,
+    required String toId,
+  }) async {
+    var currTime = DateTime.now().millisecondsSinceEpoch;
+    var chatId = getChatId(userId, toId);
+    log("$userId, $toId");
+    log(chatId);
 
-  //   var newMsg = MessageModel(
-  //       msgId: currTime.toString(),
-  //       msg: msg,
-  //       sentAt: currTime.toString(),
-  //       fromId: userId,
-  //       toId: toId);
+    var newMsg = MessageModel(
+        msgId: currTime.toString(),
+        msg: msg,
+        sentAt: currTime.toString(),
+        fromId: userId,
+        toId: toId);
 
-  //   fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .doc(currTime.toString())
-  //       .set(newMsg.toDoc());
-  // }
+    firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        .doc(currTime.toString())
+        .set(newMsg.toDoc());
+  }
+//   static Future<void> sendMessage(
+//       {required String msg,
+//       required String toId,
+//       required String userId}) async {
+//     var currTime = DateTime.now().millisecondsSinceEpoch;
+//     var chatId = await getChatId(userId, toId);
+//     log("$userId, $toId");
+//     log(chatId);
 
-  // static void sendImageMsg(
-  //     {required String imgUrl,
-  //     required String toId,
-  //     String imgMsg = "",
-  //     required String userId}) async {
-  //   var currTime = DateTime.now().millisecondsSinceEpoch;
-  //   var chatId = getChatId(userId, toId);
+//     var newMsg = MessageModel(
+//         msgId: currTime.toString(),
+//         msg: msg,
+//         sentAt: currTime.toString(),
+//         fromId: userId,
+//         toId: toId);
 
-  //   var newImgMsg = MessageModel(
-  //       msgId: currTime.toString(),
-  //       msg: imgMsg,
-  //       sentAt: currTime.toString(),
-  //       fromId: userId,
-  //       msgType: 1,
-  //       imgUrl: imgUrl,
-  //       toId: toId);
+//     firebaseFireStore
+//         .collection(collectionChat)
+//         .doc(chatId)
+//         .collection(collectionMSG)
+//         .doc(currTime.toString())
+//         .set(newMsg.toDoc());
+//   }
 
-  //   fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .doc(currTime.toString())
-  //       .set(newImgMsg.toDoc());
-  // }
+  static Future<void> sendImageMsg(
+      {required String imgUrl,
+      required String toId,
+      String imgMsg = "",
+      required String userId}) async {
+    var currTime = DateTime.now().millisecondsSinceEpoch;
+    var chatId = getChatId(userId, toId);
 
-  // static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMsg(
-  //     {required String userId, required String toId}) {
-  //   var chatId = getChatId(userId, toId);
-  //   log("getMessage : $userId, $toId");
-  //   log("getMessage : $chatId");
+    var newImgMsg = MessageModel(
+        msgId: currTime.toString(),
+        msg: imgMsg,
+        sentAt: currTime.toString(),
+        fromId: userId,
+        msgType: 1,
+        imgUrl: imgUrl,
+        toId: toId);
 
-  //   return fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .orderBy("sentAt", descending: true)
-  //       .snapshots();
-  // }
+    firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        .doc(currTime.toString())
+        .set(newImgMsg.toDoc());
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMsg(
+      {required String toId}) {
+    var chatId = getChatId(userId, toId);
+    log("getMessage : $userId, $toId");
+    log("getMessage : $chatId");
+
+    return firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        // .orderBy("sentAt", descending: true)
+        .snapshots();
+  }
 
   // static void updateReadStatus(
   //     {required String mId, required String userId, required String toId}) {

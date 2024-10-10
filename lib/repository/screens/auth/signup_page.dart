@@ -40,6 +40,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   final mFormKey = GlobalKey<FormState>();
 
   @override
@@ -69,6 +70,17 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(
                 height: 19,
+              ),
+              myTextField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "enter name please";
+                  }
+                },
+                mcrontroller: nameController,
+                hinttxt: "Enter Your password",
+                labelTxt: "password",
+                preIcon: const Icon(Icons.usb_rounded),
               ),
               myTextField(
                 validator: (value) {
@@ -140,11 +152,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (mFormKey.currentState!.validate()) {
                           String email = emailController.text;
                           String password = passController.text;
+                          String name = nameController.text;
 
                           if (emailController.text.isNotEmpty &&
                               passController.text.isNotEmpty) {
                             var newUser = UserModel(
-                                name: "mukesh Kumar",
+                                name: name,
                                 email: email,
                                 mobNo: "9876543321",
                                 gender: "Male",
