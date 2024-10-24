@@ -51,6 +51,7 @@ class ContactPage extends StatelessWidget {
             var eachUser = UserModel.fromDoc(eachDoc.data());
 
             if (eachDoc.id != userId) {
+              eachUser.userId = eachDoc.id;
               arrUsers.add(eachUser);
             }
           }
@@ -59,13 +60,15 @@ class ContactPage extends StatelessWidget {
               ? ListView.builder(
                   itemCount: arrUsers.length,
                   itemBuilder: (context, index) {
-                    var eachContactId = snapshot.data!.docs[index].id;
+                    // var eachContactId = snapshot.data!.docs[index].id;
+                    var eachContactId = arrUsers[index].userId;
                     return ListTile(
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ChatPage(
                               toId: eachContactId,
+                              userId: userId,
                             ),
                           )),
                       title: Text(arrUsers[index].name!),

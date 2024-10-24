@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:one_chat_app/data/firebase/firebase_provider.dart';
+import 'package:one_chat_app/repository/screens/auth/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -10,19 +15,29 @@ class SettingsPage extends StatelessWidget {
         title: const Text("Settings"),
       ),
       body: ListView(
-        children: const [
-          ListTile(
+        children: [
+          const ListTile(
             leading: Icon(Icons.dark_mode_rounded),
             title: Text("dark mode"),
           ),
-          // ListTile(
-          //   leading: Icon(Icons.logout),
-          //   title: Text("log out"),
-          //   onTap: () {
-          //     FirebaseProvider.userLogOut();
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text("log out"),
+            onTap: () async {
+              var signOutPrefs = await SharedPreferences.getInstance();
+              signOutPrefs.setString(LoginPageState.loginPrefsKey, "");
 
-          //   },
-          // ),
+              await FirebaseProvider.logOut;
+
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  )).then((a) {
+                log("user log out $a");
+              });
+            },
+          ),
         ],
       ),
     );

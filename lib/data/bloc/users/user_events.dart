@@ -18,11 +18,12 @@ class GetChatIdEvent extends UserEvents {
 class SendMessageEvent extends UserEvents {
   String msg;
   String toId;
-  // String userId;
+  String userId;
 
   SendMessageEvent({
     required this.msg,
     required this.toId,
+    required this.userId,
   });
 }
 
@@ -42,8 +43,10 @@ class SendImageMsgEvent extends UserEvents {
 class GetAllMsgEvent extends UserEvents {
   // String userId;
   String toId;
+  String userId;
 
   GetAllMsgEvent({
     required this.toId,
+    required this.userId,
   });
 }

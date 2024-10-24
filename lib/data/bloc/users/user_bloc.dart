@@ -44,6 +44,7 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
         emit(UserLoadingState());
         try {
           await FirebaseProvider.sendMessage(
+            userId: event.userId,
             msg: event.msg,
             toId: event.toId,
           );
@@ -75,7 +76,10 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
       (event, emit) {
         emit(UserLoadingState());
         try {
-          FirebaseProvider.getAllMsg(toId: event.toId);
+          FirebaseProvider.getAllMsg(
+            userId: event.userId,
+            toId: event.toId,
+          );
 
           emit(UserLoadedState());
         } catch (e) {

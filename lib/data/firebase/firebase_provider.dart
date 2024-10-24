@@ -18,7 +18,9 @@ class FirebaseProvider {
   static const String collectionChat = "chats";
   static const String collectionMSG = "messages";
 
+//   static final userId = firebaseAuth.currentUser!.uid;
   static final userId = FirebaseAuth.instance.currentUser!.uid;
+  static final logOut = FirebaseAuth.instance.signOut();
 
   Future<void> createUser(
       {required UserModel mUser, required String mPass}) async {
@@ -105,7 +107,7 @@ class FirebaseProvider {
 
   static String getChatId(String fromId, String toId) {
     log("$fromId, $toId");
-    if (fromId.hashCode >= toId.hashCode) {
+    if (fromId.hashCode <= toId.hashCode) {
       return "${fromId}_$toId";
     } else {
       return "${toId}_$fromId";
@@ -115,6 +117,7 @@ class FirebaseProvider {
   static Future<void> sendMessage({
     required String msg,
     required String toId,
+    required String userId,
   }) async {
     var currTime = DateTime.now().millisecondsSinceEpoch;
     var chatId = getChatId(userId, toId);
@@ -185,7 +188,7 @@ class FirebaseProvider {
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMsg(
-      {required String toId}) {
+      {required String toId, required String userId}) {
     var chatId = getChatId(userId, toId);
     log("getMessage : $userId, $toId");
     log("getMessage : $chatId");
