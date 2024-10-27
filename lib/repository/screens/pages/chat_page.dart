@@ -4,7 +4,6 @@ import 'package:one_chat_app/data/bloc/users/user_bloc.dart';
 import 'package:one_chat_app/data/bloc/users/user_events.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
 import 'package:one_chat_app/domain/models/message_model.dart';
-import 'package:one_chat_app/repository/widgets/chat_page_widgets/chat_bubble.dart';
 import '../../widgets/text_feild/text_field.dart';
 
 class ChatPage extends StatefulWidget {
