@@ -88,5 +88,37 @@ class UserBloc extends Bloc<UserEvents, UserStates> {
         }
       },
     );
+
+    on<UpdateReadStatusEvent>(
+      (event, emit) async {
+        emit(UserLoadingState());
+
+        try {
+          await FirebaseProvider.updateReadStatus(
+              mId: event.msgId, userId: event.userId, toId: event.toId);
+
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+          log("error in UpdateReadStatusEvent in bloc ${e.toString()}");
+        }
+      },
+    );
+
+    on<GetUnreadCountEvent>(
+      (event, emit) {
+        emit(UserLoadingState());
+
+        try {
+          FirebaseProvider.getUnreadCount(
+              userId: event.userId, toId: event.toId);
+
+          emit(UserLoadedState());
+        } catch (e) {
+          emit(UserErrorState(errorMsg: e.toString()));
+          log("error in GetUnreadCountEvent ${e.toString()}");
+        }
+      },
+    );
   }
 }

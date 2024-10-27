@@ -50,3 +50,19 @@ class GetAllMsgEvent extends UserEvents {
     required this.userId,
   });
 }
+
+class UpdateReadStatusEvent extends UserEvents {
+  String msgId;
+  String userId;
+  String toId;
+
+  UpdateReadStatusEvent(
+      {required this.msgId, required this.toId, required this.userId});
+}
+
+class GetUnreadCountEvent extends UserEvents {
+  String userId;
+  String toId;
+
+  GetUnreadCountEvent({required this.userId, required this.toId});
+}

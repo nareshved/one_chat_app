@@ -45,6 +45,7 @@ class LoginPageState extends State<LoginPage> {
                   if (value!.isEmpty) {
                     return "enter a email";
                   }
+                  return null;
                 },
                 mcrontroller: emailController,
                 hinttxt: "Enter Your email",
@@ -59,6 +60,7 @@ class LoginPageState extends State<LoginPage> {
                   if (value!.isEmpty) {
                     return "enter a password";
                   }
+                  return null;
                 },
                 mcrontroller: passController,
                 hinttxt: "Enter Your password",

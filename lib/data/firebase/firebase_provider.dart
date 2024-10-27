@@ -201,31 +201,33 @@ class FirebaseProvider {
         .snapshots();
   }
 
-  // static void updateReadStatus(
-  //     {required String mId, required String userId, required String toId}) {
-  //   var currTime = DateTime.now().millisecondsSinceEpoch;
-  //   var chatId = getChatId(userId, toId);
+  static Future<void> updateReadStatus(
+      {required String mId,
+      required String userId,
+      required String toId}) async {
+    var currTime = DateTime.now().millisecondsSinceEpoch;
+    var chatId = getChatId(userId, toId);
 
-  //   fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .doc(mId)
-  //       .update({"readAt": currTime.toString()});
-  // }
+    return await firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        .doc(mId)
+        .update({"readAt": currTime.toString()});
+  }
 
-  // static Stream<QuerySnapshot<Map<String, dynamic>>> getUnreadCount(
-  //     {required String userId, required String toId}) {
-  //   var chatId = getChatId(userId, toId);
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUnreadCount(
+      {required String userId, required String toId}) {
+    var chatId = getChatId(userId, toId);
 
-  //   return fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .where("readAt", isEqualTo: "")
-  //       .where("fromId", isEqualTo: toId)
-  //       .snapshots();
-  // }
+    return firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        .where("readAt", isEqualTo: "")
+        .where("fromId", isEqualTo: toId)
+        .snapshots();
+  }
 
   // static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMsg({required String userId, required String toId}){
   //   var chatId = getChatId(userId, toId);

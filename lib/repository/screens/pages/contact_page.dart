@@ -62,17 +62,50 @@ class ContactPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     // var eachContactId = snapshot.data!.docs[index].id;
                     var eachContactId = arrUsers[index].userId;
-                    return ListTile(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatPage(
-                              toId: eachContactId,
-                              userId: userId,
+                    return StreamBuilder(
+                      stream: FirebaseProvider.getUnreadCount(
+                          userId: userId, toId: eachContactId!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.active) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            );
+                          }
+                        }
+
+                        if (snapshot.hasData) {
+                          return ListTile(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    toId: eachContactId,
+                                    userId: userId,
+                                  ),
+                                )),
+                            title: Text(arrUsers[index].name!),
+                            subtitle: Text(arrUsers[index].email!),
+                            trailing: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "${snapshot.data!.docs.length}",
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
                             ),
-                          )),
-                      title: Text(arrUsers[index].name!),
-                      subtitle: Text(arrUsers[index].email!),
+                          );
+                        }
+                        return Container();
+                      },
                     );
                   },
                 )
@@ -84,3 +117,21 @@ class ContactPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+// ListTile(
+//                       onTap: () => Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                             builder: (context) => ChatPage(
+//                               toId: eachContactId,
+//                               userId: userId,
+//                             ),
+//                           )),
+//                       title: Text(arrUsers[index].name!),
+//                       subtitle: Text(arrUsers[index].email!),
+//                     );

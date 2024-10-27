@@ -43,25 +43,9 @@ class _ChatPageState extends State<ChatPage> {
           Icon(Icons.video_camera_back)
         ],
       ),
-      bottomSheet: Container(
-        margin: const EdgeInsets.all(12),
-        child: myTextField(
-            suffIcon: IconButton(
-                onPressed: () {
-                  if (messageController.text.isNotEmpty) {
-                    BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
-                      userId: widget.userId,
-                      msg: messageController.text.trim(),
-                      toId: widget.toId,
-                    ));
-                  }
-                  messageController.clear();
-                },
-                icon: const Icon(Icons.send)),
-            hinttxt: "message a new",
-            mcrontroller: messageController,
-            labelTxt: "message"),
-      ),
+
+      // bottomSheet: ,
+
       body: Column(
         children: [
           StreamBuilder(
@@ -100,11 +84,31 @@ class _ChatPageState extends State<ChatPage> {
               return Container();
             },
           ),
+          Container(
+            // margin: const EdgeInsets.all(12),
+            child: myTextField(
+                suffIcon: IconButton(
+                    onPressed: () {
+                      if (messageController.text.isNotEmpty) {
+                        BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
+                          userId: widget.userId,
+                          msg: messageController.text.trim(),
+                          toId: widget.toId,
+                        ));
+                      }
+                      messageController.clear();
+                    },
+                    icon: const Icon(Icons.send)),
+                hinttxt: "message a new",
+                mcrontroller: messageController,
+                labelTxt: "message"),
+          )
         ],
       ),
     );
   }
 
+  // right
   Widget fromMsgWidget({required MessageModel msg}) {
     var sentTime = TimeOfDay.fromDateTime(
         DateTime.fromMillisecondsSinceEpoch(int.parse(msg.sentAt!)));
@@ -164,7 +168,13 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+// left
   Widget toMsgWidget({required MessageModel msg}) {
+    if (msg.readAt == "") {
+      BlocProvider.of<UserBloc>(context).add(UpdateReadStatusEvent(
+          msgId: msg.msgId!, toId: widget.toId, userId: widget.userId));
+    }
+
     var sentTime = TimeOfDay.fromDateTime(
         DateTime.fromMillisecondsSinceEpoch(int.parse(msg.sentAt!)));
     return Row(
@@ -192,8 +202,6 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
-
-
 
 
 

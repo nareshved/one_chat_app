@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: AppRoutes.routes,
       title: 'One Chat',
       theme: ThemeData(
+        // colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
