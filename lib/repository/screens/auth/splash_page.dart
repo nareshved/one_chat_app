@@ -48,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             Icon(Icons.light_mode, size: 42.0, color: Colors.white),
             Text(
-              "One Chat",
+              "One Chat APP Test",
               style: TextStyle(color: Colors.white),
             ),
           ],
