@@ -197,7 +197,7 @@ class FirebaseProvider {
         .collection(collectionChat)
         .doc(chatId)
         .collection(collectionMSG)
-        // .orderBy("sentAt", descending: true)
+        // .orderBy("sentAt", descending: true) /// for scroll controller
         .snapshots();
   }
 
@@ -229,16 +229,16 @@ class FirebaseProvider {
         .snapshots();
   }
 
-  // static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMsg({required String userId, required String toId}){
-  //   var chatId = getChatId(userId, toId);
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMsg(
+      {required String userId, required String toId}) {
+    var chatId = getChatId(userId, toId);
 
-  //   return fireBaseFireStore
-  //       .collection(COLLECTION_CHAT)
-  //       .doc(chatId)
-  //       .collection(COLLECTION_MSG)
-  //       .orderBy("sentAt", descending: true)
-  //       .limit(1)
-  //       .snapshots();
-
-  // }
+    return firebaseFireStore
+        .collection(collectionChat)
+        .doc(chatId)
+        .collection(collectionMSG)
+        .orderBy("sentAt", descending: true)
+        .limit(1)
+        .snapshots();
+  }
 }

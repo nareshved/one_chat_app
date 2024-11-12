@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
+import 'package:one_chat_app/domain/models/message_model.dart';
 import 'package:one_chat_app/domain/models/user_model.dart';
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
 import 'package:one_chat_app/repository/screens/pages/chat_page.dart';
@@ -87,7 +88,9 @@ class ContactPage extends StatelessWidget {
                                   ),
                                 )),
                             title: Text(arrUsers[index].name!),
-                            subtitle: Text(arrUsers[index].email!),
+                            subtitle: getLastMsg(
+                              toId: userId,
+                            ),
                             trailing: Container(
                               width: 20,
                               height: 20,
@@ -114,6 +117,48 @@ class ContactPage extends StatelessWidget {
                 );
         },
       )),
+    );
+  }
+
+  StreamBuilder getLastMsg(
+      {required String toId, String subtitle = "no last message"}) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseProvider.getLastMsg(userId: userId, toId: toId),
+      builder: (context, snapshot) {
+        // var sentTime = TimeOfDay.fromDateTime(
+        //     DateTime.fromMillisecondsSinceEpoch(int.parse()));
+
+        if (snapshot.hasData) {
+          if (snapshot.data!.docs.isNotEmpty) {
+            var messageModel = MessageModel.fromDoc(snapshot.data!.docs[0]
+                .data()); // for who are sent last message by check by userID
+            var lastMsg = messageModel.msg;
+            //var lastMsg = MessageModel.fromDoc(snapshot.data!.docs[0].data()).msg;
+
+            if (messageModel.fromId == userId) {
+              /// if lastMsg from me
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.done_all_outlined,
+                      color: messageModel.readAt != ""
+                          ? Colors.blue
+                          : Colors.grey),
+                  Text(lastMsg!),
+                ],
+              );
+            } else {
+              /// if last message to Id!
+              return Text(lastMsg!);
+            }
+          } else {
+            return Text(subtitle);
+          }
+        } else {
+          return Text(subtitle);
+        }
+        //   return Container();
+      },
     );
   }
 }
