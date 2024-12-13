@@ -19,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     Timer(
-      const Duration(seconds: 300),
+      const Duration(seconds: 3),
       () async {
         var prefs = await SharedPreferences.getInstance();
         String? myKey = prefs.getString(LoginPageState.loginPrefsKey);
@@ -40,14 +40,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.deepOrange,
+      //  backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Color(0xffDC1200),
+      // backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              ImagesPathProvider.appLogoRed,
+              ImagesPathProvider.appLogoWhite,
               //   width: 250,
               height: 100, fit: BoxFit.fitWidth,
             ),
@@ -58,7 +60,7 @@ class _SplashPageState extends State<SplashPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text("Connecting Conversations… Anytime, Anywhere!",
-                  style: TextStyle(color: Colors.red, fontFamily: "Outfit")),
+                  style: TextStyle(color: Colors.white, fontFamily: "Outfit")),
             ),
           ],
         ),

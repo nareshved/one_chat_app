@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "enter name please";
-                  }
+                  } 
                 },
                 mcrontroller: nameController,
                 hinttxt: "Enter Your password",
