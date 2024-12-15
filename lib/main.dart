@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_chat_app/data/bloc/chat/register_bloc.dart';
 import 'package:one_chat_app/data/bloc/users/user_bloc.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
@@ -28,15 +29,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.splashScreen,
-      routes: AppRoutes.routes,
-      title: 'One Chat',
-      theme: mlightTheme,
-      darkTheme: mDarkTheme,
-      themeMode: ThemeMode.dark,
-      // home: const BottomNavBarHome(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.splashScreen,
+        routes: AppRoutes.routes,
+        title: 'One Chat',
+        theme: mlightTheme,
+        darkTheme: mDarkTheme,
+        //    themeMode: ThemeMode.dark,
+        // home: const BottomNavBarHome(),
+      ),
     );
   }
 }

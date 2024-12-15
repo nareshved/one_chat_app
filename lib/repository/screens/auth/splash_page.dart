@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_chat_app/domain/constants/assets_path/assets_path.dart';
+
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/page_routes/routes.dart';
@@ -26,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
 
         log("splash page firebase uid : $myKey");
 
-        String navigateTo = AppRoutes.loginScreen;
+        String navigateTo = AppRoutes.mobileOtpPage;
 
         if (myKey != null && myKey != "") {
           navigateTo = AppRoutes.homeNavBarScreen;
@@ -46,21 +49,42 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              ImagesPathProvider.appLogoWhite,
-              //   width: 250,
-              height: 100, fit: BoxFit.fitWidth,
+            FadeIn(
+              animate: true,
+              duration: Duration(seconds: 3),
+              child: Image.asset(
+                ImagesPathProvider.appLogoWhite,
+                //   width: 250,
+                height: 100, fit: BoxFit.fitWidth,
+              ),
             ),
-            Text(
-              "One chat",
-              style: TextStyle(color: Colors.red, fontFamily: "Outfit"),
+            SizedBox(
+              height: 40.h,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+            FadeIn(
+              animate: true,
+              duration: Duration(seconds: 2),
+              child: Text(
+                "One chat",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            FadeIn(
+              animate: true,
+              duration: Duration(seconds: 2),
               child: Text("Connecting Conversations… Anytime, Anywhere!",
-                  style: TextStyle(color: Colors.white, fontFamily: "Outfit")),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: Theme.of(context).colorScheme.surface)),
             ),
           ],
         ),

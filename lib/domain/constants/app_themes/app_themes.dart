@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:one_chat_app/domain/constants/app_colors/app_colors.dart';
 
-
-
 var mlightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(

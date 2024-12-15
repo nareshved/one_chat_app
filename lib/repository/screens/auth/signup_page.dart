@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "enter name please";
-                  } 
+                  }  return null;
                 },
                 mcrontroller: nameController,
                 hinttxt: "Enter Your password",
@@ -93,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     return "Email can't be empty!";
                   } else if (!regExp.hasMatch(value)) {
                     return "Please enter a valid email!";
-                  }
+                  }  return null;
                 },
                 mcrontroller: emailController,
                 hinttxt: "Enter Your email",
@@ -107,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (value) {
                   if (value!.length <= 7) {
                     return "Length should be greater than 7";
-                  }
+                  }  return null;
                 },
                 mcrontroller: passController,
                 hinttxt: "Enter Your password",

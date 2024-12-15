@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_chat_app/repository/screens/auth/otp_page.dart';
 import 'package:one_chat_app/repository/widgets/home_page/bottom_nav_bar.dart';
 import '../../screens/auth/login_page.dart';
 import '../../screens/auth/signup_page.dart';
@@ -20,14 +21,16 @@ class AppRoutes {
   static const String chatScreen = '/chat_screen';
 
   static const String homeNavBarScreen = '/homeNavBar_screen';
+  static const String mobileOtpPage = '/otp_screen';
 
   static Map<String, WidgetBuilder> get routes => {
         splashScreen: (context) => const SplashPage(),
         loginScreen: (context) => const LoginPage(),
         signUpScreen: (context) => SignUpPage.builder(),
         // homeScreen: (context) => const HomeScreen(),
-        contactScreen: (context) =>  ContactPage(),
+        contactScreen: (context) => ContactPage(),
         chatScreen: (context) => const HomeChatsPage(),
         homeNavBarScreen: (context) => const BottomNavBarHome(),
+        mobileOtpPage: (context) => const OtpPage(),
       };
 }
