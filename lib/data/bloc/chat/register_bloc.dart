@@ -10,9 +10,26 @@ part 'register_state.dart';
 class ChatBloc extends Bloc<ChatEvents, ChatState> {
   FirebaseProvider firebaseProvider;
 
+  ChatBloc({
+    required this.firebaseProvider,
+  }) : super(ChatInitialState()) {
+    on<CreateUserOtpEvent>(
+      (event, emit) async {
+        emit(ChatLoadingState());
 
-  ChatBloc({required this.firebaseProvider,})
-      : super(ChatInitialState()) {
+        try {
+          await firebaseProvider.createUserWithOtp(
+              context: event.mContext,
+              mobileNo: event.mobileNo,
+              verificationId: event.verificationId);
+
+          emit(ChatLoadedState());
+        } catch (e) {
+          emit(ChatErrorState(errorMsg: e.toString()));
+        }
+      },
+    );
+
     on<CreateUserEvent>((event, emit) async {
       emit(ChatLoadingState());
 

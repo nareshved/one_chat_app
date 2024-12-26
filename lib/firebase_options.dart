@@ -25,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -52,7 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '750270234587',
     projectId: 'nk-one-chat-app',
     authDomain: 'nk-one-chat-app.firebaseapp.com',
-    storageBucket: 'nk-one-chat-app.appspot.com',
+    storageBucket: 'nk-one-chat-app.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -60,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:750270234587:android:5c8c32750d860e8572f1fe',
     messagingSenderId: '750270234587',
     projectId: 'nk-one-chat-app',
-    storageBucket: 'nk-one-chat-app.appspot.com',
+    storageBucket: 'nk-one-chat-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -68,7 +62,26 @@ class DefaultFirebaseOptions {
     appId: '1:750270234587:ios:686206231878fc0272f1fe',
     messagingSenderId: '750270234587',
     projectId: 'nk-one-chat-app',
-    storageBucket: 'nk-one-chat-app.appspot.com',
+    storageBucket: 'nk-one-chat-app.firebasestorage.app',
     iosBundleId: 'com.example.oneChatApp',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCaaOrH9yH64gd2H8Z-ZJWFSV1SThbZA-A',
+    appId: '1:750270234587:ios:686206231878fc0272f1fe',
+    messagingSenderId: '750270234587',
+    projectId: 'nk-one-chat-app',
+    storageBucket: 'nk-one-chat-app.firebasestorage.app',
+    iosBundleId: 'com.example.oneChatApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAr1SsSrPH6ysXQb7NZLvz1iafMrGv5_e8',
+    appId: '1:750270234587:web:55885d1cae2cc43b72f1fe',
+    messagingSenderId: '750270234587',
+    projectId: 'nk-one-chat-app',
+    authDomain: 'nk-one-chat-app.firebaseapp.com',
+    storageBucket: 'nk-one-chat-app.firebasestorage.app',
+  );
+
 }

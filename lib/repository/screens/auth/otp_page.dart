@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:one_chat_app/data/firebase/firebase_provider.dart';
 import 'package:one_chat_app/domain/constants/text_contents/texts.dart';
-import 'package:one_chat_app/main.dart';
 
-class OtpPage extends StatelessWidget {
-  const OtpPage({super.key});
+import 'otp_verification.dart';
+
+class OtpLoginPage extends StatelessWidget {
+  OtpLoginPage({super.key});
+
+  final TextEditingController mobileController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,9 @@ class OtpPage extends StatelessWidget {
                 SizedBox(
                     width: 300,
                     child: TextFormField(
+                      controller: mobileController,
+                      maxLength: 10,
+                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: "Phone number",
                       ),
@@ -42,33 +51,75 @@ class OtpPage extends StatelessWidget {
                   width: 0.7.sw,
                   child: ElevatedButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text(
-                            "is this the correct number",
-                            style: Theme.of(context).textTheme.bodyMedium,
+                      if (mobileController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Enter mobile number")));
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text(
+                              "is this the correct number",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            content: Text(
+                              mobileController.text.trim().toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Edit",
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  )),
+                              TextButton(
+                                  onPressed: () async {
+                                    try {
+                                      await FirebaseProvider.firebaseAuth
+                                          .verifyPhoneNumber(
+                                        phoneNumber:
+                                            "+91${mobileController.text}",
+                                        verificationCompleted:
+                                            (phoneAuthCredential) {
+                                          log("verificationCompleted");
+                                        },
+                                        verificationFailed: (error) {
+                                          log("verificationFailed");
+                                        },
+                                        codeSent: (verificationId,
+                                            forceResendingToken) {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OtpVerificationPage(
+                                                  mVerificationId:
+                                                      verificationId,
+                                                ),
+                                              ));
+                                        },
+                                        codeAutoRetrievalTimeout:
+                                            (verificationId) {
+                                          log("verificationId");
+                                        },
+                                      );
+                                    } catch (e) {
+                                      log("new error found in otp firebase ${e.toString()}");
+                                    }
+                                  },
+                                  child: Text(
+                                    "Yes",
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  )),
+                            ],
                           ),
-                          content: Text(
-                            "+91 xxxxxxxxxx",
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
-                          actions: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Edit",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "Yes",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )),
-                          ],
-                        ),
-                      );
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Theme.of(context).colorScheme.surface,
@@ -84,6 +135,9 @@ class OtpPage extends StatelessWidget {
     );
   }
 }
+
+
+
 // import 'package:flutter/material.dart';
 // import 'package:one_chat_app/domain/constants/text_contents/texts.dart';
 

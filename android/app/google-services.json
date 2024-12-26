@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "750270234587",
     "project_id": "nk-one-chat-app",
-    "storage_bucket": "nk-one-chat-app.appspot.com"
+    "storage_bucket": "nk-one-chat-app.firebasestorage.app"
   },
   "client": [
     {

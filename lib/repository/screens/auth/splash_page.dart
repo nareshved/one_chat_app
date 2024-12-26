@@ -29,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
 
         log("splash page firebase uid : $myKey");
 
-        String navigateTo = AppRoutes.mobileOtpPage;
+        String navigateTo = AppRoutes.otpLoginPage;
 
         if (myKey != null && myKey != "") {
           navigateTo = AppRoutes.homeNavBarScreen;

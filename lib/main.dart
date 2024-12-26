@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,13 +5,12 @@ import 'package:one_chat_app/data/bloc/chat/register_bloc.dart';
 import 'package:one_chat_app/data/bloc/users/user_bloc.dart';
 import 'package:one_chat_app/data/firebase/firebase_provider.dart';
 import 'package:one_chat_app/domain/constants/app_themes/app_themes.dart';
-import 'package:one_chat_app/firebase_options.dart';
 
 import 'repository/widgets/page_routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+ // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
       create: (context) => ChatBloc(firebaseProvider: FirebaseProvider()),

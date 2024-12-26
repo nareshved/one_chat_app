@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
+import 'package:one_chat_app/repository/screens/auth/otp_verification.dart';
 import 'package:one_chat_app/repository/widgets/home_page/bottom_nav_bar.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +22,37 @@ class FirebaseProvider {
 //   static final userId = firebaseAuth.currentUser!.uid;
   static final userId = FirebaseAuth.instance.currentUser!.uid;
   static final logOut = FirebaseAuth.instance.signOut();
+
+  Future<void> createUserWithOtp(
+      {required String mobileNo,
+      String? verificationId,
+      required BuildContext context}) async {
+    try {
+      await firebaseAuth.verifyPhoneNumber(
+        phoneNumber: "+91$mobileNo",
+        verificationCompleted: (phoneAuthCredential) {
+          log("verificationCompleted");
+        },
+        verificationFailed: (error) {
+          log("verificationFailed");
+        },
+        codeSent: (verificationId, forceResendingToken) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OtpVerificationPage(
+                  mVerificationId: verificationId,
+                ),
+              ));
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          log("verificationId");
+        },
+      );
+    } catch (e) {
+      log("new error found in otp firebase ${e.toString()}");
+    }
+  }
 
   Future<void> createUser(
       {required UserModel mUser, required String mPass}) async {

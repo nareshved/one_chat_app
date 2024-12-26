@@ -21,7 +21,8 @@ class AppRoutes {
   static const String chatScreen = '/chat_screen';
 
   static const String homeNavBarScreen = '/homeNavBar_screen';
-  static const String mobileOtpPage = '/otp_screen';
+  static const String otpLoginPage = '/otp_screen';
+  // static const String otpVerificationPage = '/otp_verify_screen';
 
   static Map<String, WidgetBuilder> get routes => {
         splashScreen: (context) => const SplashPage(),
@@ -31,6 +32,7 @@ class AppRoutes {
         contactScreen: (context) => ContactPage(),
         chatScreen: (context) => const HomeChatsPage(),
         homeNavBarScreen: (context) => const BottomNavBarHome(),
-        mobileOtpPage: (context) => const OtpPage(),
+        otpLoginPage: (context) => OtpLoginPage(),
+        // otpVerificationPage: (context) => OtpVerificationPage(mVerificationId: ,),
       };
 }
