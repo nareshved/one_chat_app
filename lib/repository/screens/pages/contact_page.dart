@@ -163,11 +163,6 @@ class ContactPage extends StatelessWidget {
   }
 }
 
-
-
-
-
-
 // ListTile(
 //                       onTap: () => Navigator.push(
 //                           context,

@@ -87,21 +87,23 @@ class _ChatPageState extends State<ChatPage> {
           Container(
             // margin: const EdgeInsets.all(12),
             child: myTextField(
-                suffIcon: IconButton(
-                    onPressed: () {
-                      if (messageController.text.isNotEmpty) {
-                        BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
-                          userId: widget.userId,
-                          msg: messageController.text.trim(),
-                          toId: widget.toId,
-                        ));
-                      }
-                      messageController.clear();
-                    },
-                    icon: const Icon(Icons.send)),
-                hinttxt: "message a new",
-                mcrontroller: messageController,
-                labelTxt: "message"),
+              suffIcon: IconButton(
+                  onPressed: () {
+                    if (messageController.text.isNotEmpty) {
+                      BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
+                        userId: widget.userId,
+                        msg: messageController.text.trim(),
+                        toId: widget.toId,
+                      ));
+                    }
+                    messageController.clear();
+                  },
+                  icon: const Icon(Icons.send)),
+              hinttxt: "message a new",
+              mcrontroller: messageController,
+              labelTxt: "message",
+              keyboardType: TextInputType.text,
+            ),
           )
         ],
       ),
@@ -202,12 +204,6 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';

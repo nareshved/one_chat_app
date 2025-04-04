@@ -52,35 +52,29 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isPage = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("SignUpPage"),
-      ),
       body: Form(
         key: mFormKey,
         child: Center(
             child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
+            spacing: 10,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "SignUp To Create Account!",
-                style: TextStyle(fontSize: 22),
-              ),
-              const SizedBox(
-                height: 19,
-              ),
               myTextField(
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "enter name please";
-                  }  return null;
+                  }
+                  return null;
                 },
                 mcrontroller: nameController,
-                hinttxt: "Enter Your password",
-                labelTxt: "password",
-                preIcon: const Icon(Icons.usb_rounded),
+                hinttxt: "Enter Your Name",
+                labelTxt: "Name",
+                preIcon: const Icon(Icons.person),
+                keyboardType: TextInputType.name,
               ),
               myTextField(
                 validator: (value) {
@@ -93,30 +87,34 @@ class _SignUpPageState extends State<SignUpPage> {
                     return "Email can't be empty!";
                   } else if (!regExp.hasMatch(value)) {
                     return "Please enter a valid email!";
-                  }  return null;
+                  }
+                  return null;
                 },
                 mcrontroller: emailController,
                 hinttxt: "Enter Your email",
                 labelTxt: "Email",
                 preIcon: const Icon(Icons.email),
+                keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              // const SizedBox(
+              //   height: 12,
+              // ),
               myTextField(
                 validator: (value) {
                   if (value!.length <= 7) {
                     return "Length should be greater than 7";
-                  }  return null;
+                  }
+                  return null;
                 },
                 mcrontroller: passController,
                 hinttxt: "Enter Your password",
                 labelTxt: "password",
                 preIcon: const Icon(Icons.remove_red_eye),
+                keyboardType: TextInputType.visiblePassword,
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              // const SizedBox(
+              //   height: 12,
+              // ),
               BlocConsumer<ChatBloc, ChatState>(
                 listener: (context, state) {
                   if (state is ChatLoadedState) {
@@ -132,55 +130,63 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 builder: (context, state) {
                   if (state is ChatLoadingState) {
-                    return ElevatedButton(
-                        onPressed: () {},
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              width: 11,
-                            ),
-                            Text('Loading')
-                          ],
-                        ));
+                    return SizedBox(
+                      width: isPage.width * 0.8,
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(
+                                width: 11,
+                              ),
+                              Text('Loading')
+                            ],
+                          )),
+                    );
                   }
-                  return ElevatedButton(
-                      onPressed: () async {
-                        /// firebase sign Up
+                  return SizedBox(
+                    width: isPage.width * 0.8,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          /// firebase sign Up
 
-                        if (mFormKey.currentState!.validate()) {
-                          String email = emailController.text;
-                          String password = passController.text;
-                          String name = nameController.text;
+                          if (mFormKey.currentState!.validate()) {
+                            String email = emailController.text;
+                            String password = passController.text;
+                            String name = nameController.text;
 
-                          if (emailController.text.isNotEmpty &&
-                              passController.text.isNotEmpty) {
-                            var newUser = UserModel(
-                                name: name,
-                                email: email,
-                                mobNo: "9876543321",
-                                gender: "Male",
-                                isOnline: false,
-                                status: 1,
-                                profilePic: "wait",
-                                profileStatus: 1);
+                            if (emailController.text.isNotEmpty &&
+                                passController.text.isNotEmpty) {
+                              var newUser = UserModel(
+                                  name: name,
+                                  email: email,
+                                  mobNo: "9876543321",
+                                  gender: "Male",
+                                  isOnline: false,
+                                  status: 1,
+                                  profilePic: "wait",
+                                  profileStatus: 1);
 
-                            BlocProvider.of<ChatBloc>(context).add(
-                                CreateUserEvent(
-                                    newUser: newUser, pass: password));
+                              BlocProvider.of<ChatBloc>(context).add(
+                                  CreateUserEvent(
+                                      newUser: newUser, pass: password));
+                            }
+
+                            /// if
                           }
-
-                          /// if
-                        }
-                      },
-                      child: const Text("SignUp Now!"));
+                        },
+                        child: const Text("SignUp Now!")),
+                  );
                 },
               ),
               const SizedBox(
                 height: 25,
               ),
-              TextButton(
+              SizedBox(
+                 width: isPage.width * 0.8,
+                child: TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
                         context,
@@ -188,7 +194,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           builder: (context) => const LoginPage(),
                         ));
                   },
-                  child: const Text("Go Login Page")),
+                  child: const Text("LogIn now!"),
+                ),
+              ),
             ],
           ),
         )),

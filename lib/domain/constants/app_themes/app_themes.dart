@@ -2,53 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:one_chat_app/domain/constants/app_colors/app_colors.dart';
 
 var mlightTheme = ThemeData(
-  brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: primaryColor,
-    surface: Colors.white,
-    // primary: primaryColor,
-  ),
   useMaterial3: true,
+  colorScheme: ColorScheme.light(
+    brightness: Brightness.light,
+    primary: AppColors.lightPrimaryColor,
+    surface: AppColors.lightBgColorSurfaceColor,
+    secondaryContainer: AppColors.lightMsgBoxContainerColor,
+  ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
       fontFamily: "Outfit",
       fontSize: 18,
-      fontWeight: FontWeight.w600,
-    ),
-    bodyMedium: TextStyle(
-      fontFamily: "Outfit",
-      fontSize: 15,
       fontWeight: FontWeight.w500,
     ),
-    bodySmall: TextStyle(
+    bodyMedium: TextStyle(
       fontFamily: "Outfit",
       fontSize: 13,
       fontWeight: FontWeight.w400,
     ),
+    bodySmall: TextStyle(
+      fontFamily: "Outfit",
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+    ),
+  ),
+  dialogTheme: DialogThemeData(
+    backgroundColor: AppColors.lightPrimaryContainerColor,
   ),
 );
 
 // dark theme
 
 var mDarkTheme = ThemeData(
-  brightness: Brightness.dark,
+  useMaterial3: true,
+  fontFamily: "Outfit",
   colorScheme: const ColorScheme.dark(
-    primary: darkPrimaryColor,
+    brightness: Brightness.dark,
+    primary: AppColors.darkPrimaryColor,
+    surface: AppColors.darkbgSurfaceColor,
+    secondaryContainer: AppColors.darkChatMsgContainerContainerColor,
   ),
+  appBarTheme: AppBarTheme(backgroundColor: AppColors.darkAppBarColor),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(
       fontFamily: "Outfit",
       fontSize: 18,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     ),
     bodyMedium: TextStyle(
       fontFamily: "Outfit",
-      fontSize: 15,
-      fontWeight: FontWeight.w500,
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
     ),
     bodySmall: TextStyle(
       fontFamily: "Outfit",
-      fontSize: 13,
+      fontSize: 10,
       fontWeight: FontWeight.w400,
     ),
   ),
