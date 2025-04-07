@@ -43,9 +43,27 @@ class _ChatPageState extends State<ChatPage> {
           Icon(Icons.video_camera_back)
         ],
       ),
-
-      // bottomSheet: ,
-
+      bottomSheet: Container(
+        margin: const EdgeInsets.all(12),
+        child: myTextField(
+          suffIcon: IconButton(
+              onPressed: () {
+                if (messageController.text.isNotEmpty) {
+                  BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
+                    userId: widget.userId,
+                    msg: messageController.text.trim(),
+                    toId: widget.toId,
+                  ));
+                }
+                messageController.clear();
+              },
+              icon: const Icon(Icons.send)),
+          hinttxt: "message a new",
+          mcrontroller: messageController,
+          labelTxt: "message",
+          keyboardType: TextInputType.text,
+        ),
+      ),
       body: Column(
         children: [
           StreamBuilder(
@@ -84,27 +102,27 @@ class _ChatPageState extends State<ChatPage> {
               return Container();
             },
           ),
-          Container(
-            // margin: const EdgeInsets.all(12),
-            child: myTextField(
-              suffIcon: IconButton(
-                  onPressed: () {
-                    if (messageController.text.isNotEmpty) {
-                      BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
-                        userId: widget.userId,
-                        msg: messageController.text.trim(),
-                        toId: widget.toId,
-                      ));
-                    }
-                    messageController.clear();
-                  },
-                  icon: const Icon(Icons.send)),
-              hinttxt: "message a new",
-              mcrontroller: messageController,
-              labelTxt: "message",
-              keyboardType: TextInputType.text,
-            ),
-          )
+          // Container(
+          //   // margin: const EdgeInsets.all(12),
+          //   child: myTextField(
+          //     suffIcon: IconButton(
+          //         onPressed: () {
+          //           if (messageController.text.isNotEmpty) {
+          //             BlocProvider.of<UserBloc>(context).add(SendMessageEvent(
+          //               userId: widget.userId,
+          //               msg: messageController.text.trim(),
+          //               toId: widget.toId,
+          //             ));
+          //           }
+          //           messageController.clear();
+          //         },
+          //         icon: const Icon(Icons.send)),
+          //     hinttxt: "message a new",
+          //     mcrontroller: messageController,
+          //     labelTxt: "message",
+          //     keyboardType: TextInputType.text,
+          //   ),
+          // )
         ],
       ),
     );

@@ -15,16 +15,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ChatBloc(firebaseProvider: FirebaseProvider()),
-        ),
-        BlocProvider(
-          create: (context) => UserBloc(firebaseProvider: FirebaseProvider()),
-        ),
-      ],
-      child: const MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => DarkThemeProvider(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ChatBloc(firebaseProvider: FirebaseProvider()),
+          ),
+          BlocProvider(
+            create: (context) => UserBloc(firebaseProvider: FirebaseProvider()),
+          ),
+          // ChangeNotifierProvider(
+          //   create: (context) => DarkThemeProvider(),
+          // )
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -43,13 +49,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.splashScreen,
         routes: AppRoutes.routes,
+        themeMode: ThemeMode.dark,
 
         // themeMode: context.watch<DarkThemeProvider>().themeValue
         //     ? ThemeMode.dark
         //     : ThemeMode.light,
         title: 'One Chat',
         theme: mlightTheme,
-        darkTheme: mDarkTheme,
+        darkTheme: ThemeData.dark(),
 
         //    themeMode: ThemeMode.dark,
         // home: const BottomNavBarHome(),

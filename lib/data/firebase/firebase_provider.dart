@@ -273,4 +273,28 @@ class FirebaseProvider {
         .limit(1)
         .snapshots();
   }
+
+  // by me
+
+  // get chatId for home page all chats
+
+  static StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+      getHomeChatsId() {
+    // List<bool> chats = [];
+    return firebaseFireStore
+        .collection(collectionChat)
+        .orderBy("sentAt", descending: true)
+        .snapshots()
+        .listen(
+      (event) {
+        // chats = event.docs
+        //     .map(
+        //       (e) => e.data().containsKey(userId),
+        //     )
+        //     .toList();
+
+        // log(chats.toString());
+      },
+    );
+  }
 }

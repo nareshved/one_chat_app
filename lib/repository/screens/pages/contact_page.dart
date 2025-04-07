@@ -87,7 +87,10 @@ class ContactPage extends StatelessWidget {
                                     userId: userId,
                                   ),
                                 )),
-                            title: Text(arrUsers[index].name!),
+                            title: Text(
+                              arrUsers[index].name!,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                             subtitle: getLastMsg(
                               toId: userId,
                             ),

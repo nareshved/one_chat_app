@@ -32,10 +32,11 @@ class SettingsPage extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text("log out"),
             onTap: () async {
+              await FirebaseProvider.logOut;
               var signOutPrefs = await SharedPreferences.getInstance();
               signOutPrefs.setString(LoginPageState.loginPrefsKey, "");
 
-              await FirebaseProvider.logOut;
+              log("user log out success");
 
               Navigator.pushReplacement(
                   context,

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_chat_app/domain/constants/assets_path/assets_path.dart';
 
 import 'package:one_chat_app/repository/screens/auth/login_page.dart';
@@ -44,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //  backgroundColor: Theme.of(context).colorScheme.primary,
-      backgroundColor: Color(0xffDC1200),
+
       // backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
@@ -55,36 +54,10 @@ class _SplashPageState extends State<SplashPage> {
               animate: true,
               duration: Duration(seconds: 3),
               child: Image.asset(
-                ImagesPathProvider.appLogoWhite,
+                ImagesPathProvider.appLogoRed,
                 //   width: 250,
                 height: 100, fit: BoxFit.fitWidth,
               ),
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            FadeIn(
-              animate: true,
-              duration: Duration(seconds: 2),
-              child: Text(
-                "One chat",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.surface),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            FadeIn(
-              animate: true,
-              duration: Duration(seconds: 2),
-              child: Text("Connecting Conversations… Anytime, Anywhere!",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: Theme.of(context).colorScheme.surface)),
             ),
           ],
         ),
